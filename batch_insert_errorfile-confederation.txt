@@ -1,0 +1,1 @@
+key_id,confederation_id,confederation_name,confederation_code,confederation_wikipedia_link
