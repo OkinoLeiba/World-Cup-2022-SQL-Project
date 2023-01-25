@@ -41,6 +41,7 @@ CREATE TABLE [Award].[Awards](
 GO
 
 
+
 USE [WorldCup2022]
 GO
 

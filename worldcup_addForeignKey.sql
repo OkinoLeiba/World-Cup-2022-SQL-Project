@@ -25,6 +25,9 @@ ALTER TABLE [Player].[Players] ADD FK_PlayerAward VARCHAR (7) NOT NULL FOREIGN K
 
 ALTER TABLE [Team].[Teams] ADD FK_
 
+
+
+
 --Test Case: Check to see foreign keys are created in tables
 --Determine the user-defined or system-supplied name of the constraint 
 

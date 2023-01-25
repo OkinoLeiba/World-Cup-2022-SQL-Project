@@ -126,8 +126,9 @@ GO
 -- =============================================
 CREATE STATISTICS ST_Full_Awards
 ON [Award].[Awards]
-   <column_name1, sysname, column1>,
-   <column_name2, sysname, column2>
+(
+   [Key_Id_Awards],
+   [Award_Id]
 ) 
 WITH FULLSCAN;
 GO
@@ -147,8 +148,8 @@ GO
 CREATE STATISTICS ST_NoReCompute_Awards
 ON [Award].[Awards]
 ( 
-   <column_name1, sysname, column1>,
-   <column_name2, sysname, column2>
+   [Key_Id_Awards],
+   [Award_Id]
 ) 
 WITH FULLSCAN, NORECOMPUTE;
 GO
@@ -164,8 +165,8 @@ GO
 CREATE STATISTICS ST_Sample_Awards 
 ON [Award].[Awards]
 ( 
-   <column_name1, sysname, column1>,
-   <column_name2, sysname, column2>
+   [Key_Id_Awards],
+   [Award_Id]
 ) 
 WITH SAMPLE 35 PERCENT;
 GO
@@ -174,6 +175,199 @@ GO
  
 -- =======================================================================================================================================
 
+
+-- =============================================
+-- Create Fullscan Statistics  
+-- =============================================
+-- =============================================
+-- Author:		Okino Leiba
+-- Create date: 12/24/2022
+-- Description:	Create statistics to moniter frequently used tables 
+-- =============================================
+CREATE STATISTICS ST_Full_Groups
+ON [Group].[Groups]
+( 
+   [Key_Id_Group],
+   [Tournament_Id]
+) 
+WITH FULLSCAN;
+GO
+
+-- =============================================
+-- Create Fullscan Norecompute Statistics
+-- =============================================
+-- =============================================
+-- Author:		Okino Leiba
+-- Create date: 12/24/2022
+-- Description:	Create statistics to moniter frequently used tables 
+-- =============================================
+-- Note: Statistics created with NORECOMPUTE are not updated by SQL Server's
+-- automatic statistics update feature (auto-stats). Therefore, they many cause
+-- suboptimal plans.
+
+CREATE STATISTICS ST_NoReCompute_Groups
+ON [Group].[Groups]
+( 
+   [Key_Id_Group],
+   [Tournament_Id]
+) 
+WITH FULLSCAN, NORECOMPUTE;
+GO
+
+-- =============================================
+--  Create Sampled Statistics 
+-- =============================================
+-- =============================================
+-- Author:		Okino Leiba
+-- Create date: 12/24/2022
+-- Description:	Create statistics to moniter frequently used tables 
+-- =============================================
+CREATE STATISTICS ST_Sample_Groups 
+ON [Group].[Groups]
+( 
+   [Key_Id_Group],
+   [Tournament_Id]
+   
+) 
+WITH SAMPLE 35 PERCENT;
+GO
+-- Instead of PERCENT, you can say ROWS to specify the number of rows to sample.
+ 
+ 
+-- =======================================================================================================================================
+
+
+-- =============================================
+-- Create Fullscan Statistics  
+-- =============================================
+-- =============================================
+-- Author:		Okino Leiba
+-- Create date: 12/24/2022
+-- Description:	Create statistics to moniter frequently used tables 
+-- =============================================
+CREATE STATISTICS ST_Full_Confederations
+ON [Confederation].[Confederations]
+( 
+   [Key_Id_Confederation],
+   [Confederation_Id] 
+)
+WITH FULLSCAN;
+GO
+
+-- =============================================
+-- Create Fullscan Norecompute Statistics
+-- =============================================
+-- =============================================
+-- Author:		Okino Leiba
+-- Create date: 12/24/2022
+-- Description:	Create statistics to moniter frequently used tables 
+-- =============================================
+-- Note: Statistics created with NORECOMPUTE are not updated by SQL Server's
+-- automatic statistics update feature (auto-stats). Therefore, they many cause
+-- suboptimal plans.
+
+CREATE STATISTICS ST_NoReCompute_Confederations
+ON [Confederation].[Confederations]
+( 
+   [Key_Id_Confederation],
+   [Confederation_Id]
+)
+WITH FULLSCAN, NORECOMPUTE;
+GO
+
+-- =============================================
+--  Create Sampled Statistics 
+-- =============================================
+-- =============================================
+-- Author:		Okino Leiba
+-- Create date: 12/24/2022
+-- Description:	Create statistics to moniter frequently used tables 
+-- =============================================
+CREATE STATISTICS ST_Sample_Confederations 
+ON [Confederation].[Confederations]
+( 
+   [Key_Id_Confederation],
+   [Confederation_Id]  
+) 
+WITH SAMPLE 35 PERCENT;
+GO
+
+
+-- =======================================================================================================================================
+
+
+-- =============================================
+-- Create Fullscan Statistics  
+-- =============================================
+-- =============================================
+-- Author:		Okino Leiba
+-- Create date: 12/24/2022
+-- Description:	Create statistics to moniter frequently used tables 
+-- =============================================
+CREATE STATISTICS ST_Full_Matchs
+ON [Match].[Matchs]
+( 
+	[Key_Id_Match],
+	[Tournament_Id],
+	[Match_Id],
+	[Stadium_Id],
+	[Home_Team_Id],
+	[Away_Team_Id]  
+) 
+WITH FULLSCAN;
+GO
+
+-- =============================================
+-- Create Fullscan Norecompute Statistics
+-- =============================================
+-- =============================================
+-- Author:		Okino Leiba
+-- Create date: 12/24/2022
+-- Description:	Create statistics to moniter frequently used tables 
+-- =============================================
+-- Note: Statistics created with NORECOMPUTE are not updated by SQL Server's
+-- automatic statistics update feature (auto-stats). Therefore, they many cause
+-- suboptimal plans.
+
+CREATE STATISTICS ST_NoReCompute_Matchs
+ON [Match].[Matchs]
+( 
+	[Key_Id_Match],
+	[Tournament_Id],
+	[Match_Id],
+	[Stadium_Id],
+	[Home_Team_Id],
+	[Away_Team_Id]  
+) 
+WITH FULLSCAN, NORECOMPUTE;
+GO
+
+-- =============================================
+--  Create Sampled Statistics 
+-- =============================================
+-- =============================================
+-- Author:		Okino Leiba
+-- Create date: 12/24/2022
+-- Description:	Create statistics to moniter frequently used tables 
+-- =============================================
+CREATE STATISTICS ST_Sample_Matcha 
+ON [Match].[Matchs]
+( 
+	[Key_Id_Match],
+	[Tournament_Id],
+	[Match_Id],
+	[Stadium_Id],
+	[Home_Team_Id],
+	[Away_Team_Id]  
+) 
+WITH SAMPLE 35 PERCENT;
+GO
+
+-- =======================================================================================================================================
+
+
+
+-- Instead of PERCENT, you can say ROWS to specify the number of rows to sample.
 
 --<filter_predicate> ::=
 --    <conjunct> [AND <conjunct>]

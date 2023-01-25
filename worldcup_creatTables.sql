@@ -9,6 +9,8 @@
 --Notes: Almost all the tables have a unique id([Tournament_Id] or [Match_Id]) that can be a foreign key...how would I define the structure of that schema(hiearchal or star?)
 --Notes: Key_Id as primary key for each table???
 --Notes: Possible Forgein Keys: Key_Id, Match_Id, Tournament_Id, Team_ID, or Player_Id
+--Notes: Shadow Length - Truncation and The Errors with Key_Ids are irrelevant
+--Notes: Even with 1000 limit best to break-up INSERT INTO rows
 USE [WorldCup2022]
 GO
 
@@ -253,8 +255,12 @@ INSERT INTO [Award].[Award_Winners] VALUES
     (132,N'WC-2018',N'2018 FIFA World Cup',N'A-8',N'Best Young Player',0,N'P-02842',N'Mbappé',N'Kylian',N'T-28',N'France',N'FRA');
 
 
-USE [WorldCup2022];
+--Confirm Insert
+SELECT * FROM [WorldCup2022].[Award].[Award_Winners];
 GO
+
+-- =======================================================================================================================================
+
 
 USE [WorldCup2022];
 GO
@@ -1272,10 +1278,11 @@ INSERT INTO [Referee].[Referee_Appearances] VALUES
     (900,N'WC-2018',N'2018 FIFA World Cup',N'M-2018-64',N'France v Croatia','2018-07-15 00:00:00',N'final',N'not applicable',N'R-267',N'Pitana',N'Néstor',N'Argentina',N'CF-4',N'South American Football Confederation',N'CONMEBOL');
 
 
-
-USE [WorldCup2022];
+--Confirm Insert
+SELECT * FROM [WorldCup2022].[Referee].[Referee_Appearances];
 GO
 
+-- =======================================================================================================================================
 
 USE [WorldCup2022];
 GO
@@ -1875,8 +1882,12 @@ INSERT INTO [Referee].[Referee_Appointments] VALUES
     (510,N'WC-2018',N'2018 FIFA World Cup',N'R-319',N'Skomina',N'Damir',N'Slovenia',N'CF-6',N'Union of European Football Associations',N'UEFA'),
     (511,N'WC-2018',N'2018 FIFA World Cup',N'R-341',N'Turpin',N'Clément',N'France',N'CF-6',N'Union of European Football Associations',N'UEFA');
 
-USE [WorldCup2022];
+
+--Confirm insert
+SELECT * FROM [WorldCup2022].[Referee].[Referee_Appointments];
 GO
+
+-- =======================================================================================================================================
 
 
 USE [WorldCup2022];
@@ -4610,68 +4621,13 @@ INSERT INTO [Player].[Goals] VALUES
     (2547,N'G-2547',N'WC-2018',N'2018 FIFA World Cup',N'M-2018-64',N'France v Croatia','2018-07-15 00:00:00',N'final',N'not applicable',N'T-17',N'Croatia',N'HRV',0,1,N'P-09489',N'Mandžukić',N'Mario',17,N'T-17',N'Croatia',N'HRV',N'69''',69,0,N'second half',0,0),
     (2548,N'G-2548',N'WC-2018',N'2018 FIFA World Cup',N'M-2018-64',N'France v Croatia','2018-07-15 00:00:00',N'final',N'not applicable',N'T-28',N'France',N'FRA',1,0,N'P-09489',N'Mandžukić',N'Mario',17,N'T-17',N'Croatia',N'HRV',N'18''',18,0,N'first half',1,0);
 
-
-
-
---TODO: Address issues and run again type mismatch codepage conversion
-USE [WorldCup2022];
+--Confirm Insert
+SELECT * FROM [WorldCup2022].[Player].[Goals];
 GO
 
---Create schema
---CREATE SCHEMA [Player] AUTHORIZATION dbo;
---GO
+-- =======================================================================================================================================
 
--- Drop the table if it already exists
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Player].[Player]', N'U')) 
-DROP TABLE [Player].[Player]
-GO
-								
---Create table
-CREATE TABLE [Player].[Player] (
-	[Key_Id_Player] INT NOT NULl,
-    [Player_Id] VARCHAR(7) NOT NULL,
-    [Family_Name] VARCHAR(50),
-    [Given_Name] VARCHAR(50),
-    [Birth_Date] DATE,
-    [Goal_Keeper] CHAR (1),
-    [Defender] CHAR (1),
-    [Midfielder] CHAR (1),
-    [Forward] CHAR (1),
-    [Count_Tournaments] INT,
-    [List_Tournaments] VARCHAR(50),
-    [Player_Wikipedia_Link] VARCHAR(100)
-	CONSTRAINT [PK_Key_Id_Player] PRIMARY KEY NONCLUSTERED
-(
-[Key_Id_Player] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF, DATA_COMPRESSION = NONE) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-
--- Bulk insert data into table
-BULK INSERT [Player].[Player]
-FROM 'C:\Users\Owner\source\repos\worldcup\data-csv\players.csv'
-WITH
-(BATCHSIZE = 3500,
-CODEPAGE = 'OEM',
---DATAFILETYPE CHAR,
-ERRORFILE = 'C:\Users\Owner\Documents\SQL Server Management Studio\worldcup_proj\worldcup_proj\batch_insert_errorfile-Players.txt',
-FIRSTROW = 1,
-KEEPIDENTITY,
-KEEPNULLS,
-MAXERRORS = 10,
-ORDER ([Key_Id_Player] ASC),
-ROWS_PER_BATCH = 3500,
-TABLOCK,
-
-FORMAT = 'CSV',
-ROWTERMINATOR = '0x0A')
-
---Confirm insert
-SELECT * FROM [Player].[Players];
-GO
-
-
---TODO: Address issues and run again type mismatch codepage conversion  
+  
 USE [WorldCup2022];
 GO 
 
@@ -4687,16 +4643,16 @@ GO
 --Create table
 CREATE TABLE [Team].[Teams] (
 	[Key_Id_Teams] INT NOT NULL,
-    [Team_Id] INT NOT NULL,
-    [Team_Name] VARCHAR(16),
+    [Team_Id] VARCHAR(4) NOT NULL,
+    [Team_Name] VARCHAR(22),
     [Team_Code] VARCHAR(3),
-    [Federation_Name] VARCHAR(20),
-    [Region_Name] VARCHAR(20),
-    [Confederation_Id] VARCHAR(5) NOT NULL,
-    [Conderation_Name] VARCHAR(10),
+    [Federation_Name] VARCHAR(58),
+    [Region_Name] VARCHAR(15),
+    [Confederation_Id] VARCHAR(4) NOT NULL,
+    [Conderation_Name] VARCHAR(75),
     [Conderation_Code] VARCHAR(8),    
-    [Team_Wikipedia_Link] VARCHAR(100),
-	[Federation_Wikipedia_Link] VARCHAR(100)
+    [Team_Wikipedia_Link] VARCHAR(MAX),
+	[Federation_Wikipedia_Link] VARCHAR(MAX)
 	CONSTRAINT [PK_Key_Id_Teams] PRIMARY KEY NONCLUSTERED
 (
 [Key_Id_Teams] ASC
@@ -4709,13 +4665,14 @@ BULK INSERT [Team].[Teams]
 FROM 'C:\Users\Owner\source\repos\worldcup\data-csv\teams.csv'
 WITH
 (BATCHSIZE = 1500,
---CODEPAGE = 'OEM',
+CODEPAGE = 'ACP',
 --DATAFILETYPE CHAR,
 ERRORFILE = 'C:\Users\Owner\Documents\SQL Server Management Studio\worldcup_proj\worldcup_proj\batch_insert_errorfile.txt-Teams',
 FIRSTROW = 1,
 KEEPIDENTITY,
-KEEPNULLs,
-MAXERRORS = 50000,
+KEEPNULLS,
+--No Truncation is Occuring - Reviewed Final Data Insert
+MAXERRORS = 10,
 ORDER ([Key_Id_Teams] ASC),
 ROWS_PER_BATCH = 2000,
 TABLOCK,
@@ -4723,11 +4680,12 @@ TABLOCK,
 FORMAT = 'CSV')
 
 --Confirm insert
-SELECT * FROM [Team].[Teams];
+SELECT * FROM [WorldCup2022].[Team].[Teams];
 GO
 
+-- =======================================================================================================================================
 
---TODO: Address issues and run again type mismatch codepage conversion 
+
 USE [WorldCup2022];
 GO 
 
@@ -4739,7 +4697,7 @@ GO
 --Create table
 CREATE TABLE [Tournament].[Tournament_Standing] (
 	[Key_Id_Tournament_Standing] INT NOT NULL,
-    [Tournament_Id] VARCHAR(6) NOT NUll,
+    [Tournament_Id] VARCHAR(12) NOT NUll,
     [Tournament_Name] VARCHAR(20),
     [Position] CHAR (1) ,
     [Team_Id] VARCHAR(4) NOT NULL,
@@ -4757,30 +4715,32 @@ BULK INSERT [Tournament].[Tournament_Standing]
 FROM 'C:\Users\Owner\source\repos\worldcup\data-csv\tournament_standings.csv'
 WITH
 (BATCHSIZE = 1500,
-CODEPAGE = 'OEM',
+CODEPAGE = 'ACP',
 --DATAFILETYPE CHAR,
 ERRORFILE = 'C:\Users\Owner\Documents\SQL Server Management Studio\worldcup_proj\worldcup_proj\batch_insert_errorfile-Tournament_Standing.txt',
 FIRSTROW = 1,
 KEEPIDENTITY,
-KEEPNULLs,
-MAXERRORS = 50,
+KEEPNULLS,
+MAXERRORS = 10,
 ORDER ([Key_Id_Tournament_Standing] ASC),
 ROWS_PER_BATCH = 2000,
 TABLOCK,
 
 FORMAT = 'CSV')
 
-SELECT * FROM [Tournament].[Tournament_Standing];
+--Confirm Insert
+SELECT * FROM [WorldCup2022].[Tournament].[Tournament_Standing];
 GO
 
+-- =======================================================================================================================================
 
 
 USE [WorldCup2022];
 GO 
 
 --Create schema
-CREATE SCHEMA [Tournament] AUTHORIZATION dbo;
-GO
+--CREATE SCHEMA [Tournament] AUTHORIZATION dbo;
+--GO
 
 -- Drop the table if it already exists
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Tournament].[Tournament_Stages]',N'U'))
@@ -4837,33 +4797,40 @@ GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Name of level for eight groups of play.' , @level0type=N'SCHEMA',@level0name=N'Tournament', @level1type=N'TABLE',@level1name=N'Tournament_Stages', @level2type=N'COLUMN',@level2name=N'Group_Stage'
 GO
 
---TODO: Write up
-
-
-
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Elimination stage of play.' , @level0type=N'SCHEMA',@level0name=N'Tournament', @level1type=N'TABLE',@level1name=N'Tournament_Stages', @level2type=N'COLUMN',@level2name=N'Knockout_Stage'
 GO
 
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Last name of referee.' , @level0type=N'SCHEMA',@level0name=N'Tournament', @level1type=N'TABLE',@level1name=N'Tournament_Stages', @level2type=N'COLUMN',@level2name=N'Family_Name'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Group with odd number of teams.' , @level0type=N'SCHEMA',@level0name=N'Tournament', @level1type=N'TABLE',@level1name=N'Tournament_Stages', @level2type=N'COLUMN',@level2name=N'Unbalanced_Groups'
 GO
 
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'First name of referee.' , @level0type=N'SCHEMA',@level0name=N'Tournament', @level1type=N'TABLE',@level1name=N'Tournament_Stages', @level2type=N'COLUMN',@level2name=N'Given_Name'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Start date of tournament.' , @level0type=N'SCHEMA',@level0name=N'Tournament', @level1type=N'TABLE',@level1name=N'Tournament_Stages', @level2type=N'COLUMN',@level2name=N'Start_Date'
 GO
 
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Name of team country.' , @level0type=N'SCHEMA',@level0name=N'Tournament', @level1type=N'TABLE',@level1name=N'Tournament_Stages', @level2type=N'COLUMN',@level2name=N'Country_Name'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'End date of tournament.' , @level0type=N'SCHEMA',@level0name=N'Tournament', @level1type=N'TABLE',@level1name=N'Tournament_Stages', @level2type=N'COLUMN',@level2name=N'End_Date'
 GO
 
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Unique identification for confederation.' , @level0type=N'SCHEMA',@level0name=N'Tournament', @level1type=N'TABLE',@level1name=N'Tournament_Stages', @level2type=N'COLUMN',@level2name=N'Confederation_Id'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Numerical count of matches' , @level0type=N'SCHEMA',@level0name=N'Tournament', @level1type=N'TABLE',@level1name=N'Tournament_Stages', @level2type=N'COLUMN',@level2name=N'Count_Matches'
 GO
 
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Name of confederation' , @level0type=N'SCHEMA',@level0name=N'Tournament', @level1type=N'TABLE',@level1name=N'Tournament_Stages', @level2type=N'COLUMN', @level2name=N'Confederation_Name'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Numerical count of teams' , @level0type=N'SCHEMA',@level0name=N'Tournament', @level1type=N'TABLE',@level1name=N'Tournament_Stages', @level2type=N'COLUMN',@level2name=N'Count_Teams'
 GO
 
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Shorthand for confederation name' , @level0type=N'SCHEMA',@level0name=N'Tournament', @level1type=N'TABLE',@level1name=N'Tournament_Stages', @level2type=N'COLUMN',@level2name=N'Confederation_Code'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Numerical count of schedules' , @level0type=N'SCHEMA',@level0name=N'Tournament', @level1type=N'TABLE',@level1name=N'Tournament_Stages', @level2type=N'COLUMN',@level2name=N'Count_Scheduled'
 GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Numerical count of replays' , @level0type=N'SCHEMA',@level0name=N'Tournament', @level1type=N'TABLE',@level1name=N'Tournament_Stages', @level2type=N'COLUMN',@level2name=N'Count_Replays'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Numerical count of playoffs' , @level0type=N'SCHEMA',@level0name=N'Tournament', @level1type=N'TABLE',@level1name=N'Tournament_Stages', @level2type=N'COLUMN',@level2name=N'Count_Playoffs'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Numerical count of walkovers' , @level0type=N'SCHEMA',@level0name=N'Tournament', @level1type=N'TABLE',@level1name=N'Tournament_Stages', @level2type=N'COLUMN',@level2name=N'Count_Walkovers'
+GO
+
+
 
 --Insert data into table
-INSERT INTO [Tournament].Tournament_Stages] VALUES
+INSERT INTO [Tournament].[Tournament_Stages] VALUES
     (1,N'WC-1930',N'1930 FIFA World Cup',1,N'group stage',1,0,1,'1930-07-13 00:00:00','1930-07-22 00:00:00',15,13,15,0,0,0),
     (2,N'WC-1930',N'1930 FIFA World Cup',2,N'semi-finals',0,1,0,'1930-07-26 00:00:00','1930-07-27 00:00:00',2,4,2,0,0,0),
     (3,N'WC-1930',N'1930 FIFA World Cup',3,N'final',0,1,0,'1930-07-30 00:00:00','1930-07-30 00:00:00',1,2,1,0,0,0),
@@ -4973,6 +4940,13 @@ INSERT INTO [Tournament].Tournament_Stages] VALUES
     (107,N'WC-2018',N'2018 FIFA World Cup',6,N'final',0,1,0,'2018-07-15 00:00:00','2018-07-15 00:00:00',1,2,1,0,0,0);
 
 
+--Confirm Insert
+SELECT * FROM [WorldCup2022].[Tournament].[Tournament_Stages];
+GO
+
+-- =======================================================================================================================================
+
+
 USE [WorldCup2022];
 GO
 
@@ -5023,8 +4997,7 @@ FORMAT = 'CSV')
 SELECT * FROM [WorldCup2022].[Confederation].[Confederations];
 GO
 
-
-
+-- =======================================================================================================================================
 
 
 USE [WorldCup2022]
@@ -5097,7 +5070,7 @@ FORMAT = 'CSV')
 SELECT * FROM [WorldCup2022].[Match].[Matches];
 GO
 
-
+-- =======================================================================================================================================
 
 
 USE [WorldCup2022];
@@ -5150,84 +5123,70 @@ FORMAT = 'CSV')
 SELECT * FROM [WorldCup2022].[Manager].[Managers];
 GO
 
-
-key_id
-tournament_id
-tournament_name
-team_id
-team_name
-team_code
-player_id
-family_name
-given_name
-shirt_number
-position_name
-position_code
+-- =======================================================================================================================================
 
 
+--DO NOT EXECUTE - CREATED DIFFERENT AND CORRECT QUERY
+--USE [WorldCup2022];
+--GO
+
+----Create schema
+----CREATE SCHEMA [Manager] AUTHORIZATION dbo;
+----GO
 
 
-
-USE [WorldCup2022];
-GO
-
---Create schema
---CREATE SCHEMA [Manager] AUTHORIZATION dbo;
+---- Drop the table if it already exists
+--IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Player].[Players]',N'U'))
+--DROP TABLE [Player].[Players]
 --GO
 
 
--- Drop the table if it already exists
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Player].[Players]',N'U'))
-DROP TABLE [Player].[Players]
-GO
+--CREATE TABLE [Player].[Players] (
+--[Key_Id_Player] int NOT NULL,
+--[Player_Id] varchar(7) NOT NULL,
+--[Family_Name] varchar(50),
+--[Given_Name] varchar(50),
+--[Birth_Date] date,
+--[Goal_Keeper] char(1),
+--[Defender] char(1),
+--[Midfielder] char(1),
+--[Forward] char(1),
+--[Count_Tournaments] varchar(5),
+--[List_Tournaments] varchar(20),
+--[Player_Wikipedia_Link] varchar(MAX)
+--CONSTRAINT [PK_Key_Id_Player]  PRIMARY KEY NONCLUSTERED
+--(
+--[Key_Id_Player] ASC
+--)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF, DATA_COMPRESSION = NONE) ON [PRIMARY]
+--) ON [PRIMARY]
+--GO
+
+----Bulk insert data into table
+--BULK INSERT [Player].[Players]
+--FROM 'C:\Users\Owner\source\repos\worldcup\data-csv\players.csv'
+--WITH 
+--(BATCHSIZE = 1500,
+--CODEPAGE = '1252',
+----DATAFILETYPE 'CHAR',
+--ERRORFILE = 'C:\Users\Owner\Documents\SQL Server Management Studio\worldcup_proj\worldcup_proj\batch_insert_errorfile-player.txt',
+--FIRSTROW = 1,
+--KEEPIDENTITY,
+--KEEPNULLS,
+--MAXERRORS = 10,
+--ORDER ([Key_Id_Player] ASC),
+--ROWS_PER_BATCH = 2000,
+--TABLOCK,
+----FIELDTERMINATOR = ',',
+--ROWTERMINATOR = '0x0A',
+
+--FORMAT = 'CSV')
+
+----Confirm insert
+--SELECT * FROM [WorldCup2022].[Player].[Players];
+--GO
 
 
-CREATE TABLE [Player].[Players] (
-[Key_Id_Players] int NOT NULL,
-[Player_Id] varchar(7) NOT NULL,
-[Family_Name] varchar(50),
-[Given_Name] varchar(50),
-[Birth_Date] date,
-[Goal_Keeper] char(50),
-[Defender] char(1),
-[Midfielder] char(1),
-[Forward] char(1),
-[Count_Tournaments] varchar(5),
-[List_Tournaments] varchar(20),
-[Player_Wikipedia_Link] varchar(MAX)
-CONSTRAINT [PK_Key_Id_Players]  PRIMARY KEY NONCLUSTERED
-(
-[Key_Id_Players] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF, DATA_COMPRESSION = NONE) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-
---Bulk insert data into table
-BULK INSERT [Player].[Players]
-FROM 'C:\Users\Owner\source\repos\worldcup\data-csv\players.csv'
-WITH 
-(BATCHSIZE = 1500,
-CODEPAGE = 'OEM',
---DATAFILETYPE 'CHAR',
-ERRORFILE = 'C:\Users\Owner\Documents\SQL Server Management Studio\worldcup_proj\worldcup_proj\batch_insert_errorfile-player.txt',
-FIRSTROW = 1,
-KEEPIDENTITY,
-KEEPNULLs,
-MAXERRORS = 10,
-ORDER ([Key_Id_Players] ASC),
-ROWS_PER_BATCH = 2000,
-TABLOCK,
-FIELDTERMINATOR = ',',
-ROWTERMINATOR = '0x0a',
-
-FORMAT = 'CSV')
-
---Confirm insert
-SELECT * FROM [WorldCup2022].[Player].[Players];
-GO
-
-
-
+-- =======================================================================================================================================
 
 
 USE [WorldCup2022];
@@ -5284,3 +5243,61 @@ FORMAT = 'CSV')
 --Confirm insert
 SELECT * FROM [WorldCup2022].[Referee].[Referees];
 GO
+
+-- =======================================================================================================================================
+
+
+USE [WorldCup2022];
+GO
+
+--Create schema
+--CREATE SCHEMA [Stadium] AUTHORIZATION dbo;
+--GO
+
+
+-- Drop the table if it already exists
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[Stadium].[Stadiums]',N'U'))
+DROP TABLE [Stadium].[Stadiums]
+GO
+
+CREATE TABLE [Stadium].[Stadiums] (
+[Key_Id_Stadium] int NOT NULL,
+[Stadium_Id] varchar(5) NOT NULL,
+[Stadium_Name] varchar(32),
+[City_Name] varchar(16),
+[Country_Name] varchar(13),
+[Stadium_Capacity] varchar(6),
+[Stadium_Wikipedia_Link] varchar(MAX),
+[City_Wikipedia_Link] varchar(MAX)
+CONSTRAINT [PK_Key_Id_Stadiums]  PRIMARY KEY NONCLUSTERED
+(
+[Key_Id_Stadium] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF, DATA_COMPRESSION = NONE) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+--Bulk insert data into table
+BULK INSERT [Stadium].[Stadiums]
+FROM 'C:\Users\Owner\source\repos\worldcup\data-csv\stadiums.csv'
+WITH 
+(BATCHSIZE = 1500,
+CODEPAGE = 'ACP',
+--DATAFILETYPE 'CHAR',
+ERRORFILE = 'C:\Users\Owner\Documents\SQL Server Management Studio\worldcup_proj\worldcup_proj\batch_insert_errorfile-staduim.txt',
+FIRSTROW = 1,
+KEEPIDENTITY,
+KEEPNULLs,
+MAXERRORS = 10,
+ORDER ([Key_Id_Stadium] ASC),
+ROWS_PER_BATCH = 2000,
+TABLOCK,
+--FIELDTERMINATOR = ',',
+ROWTERMINATOR = '0x0a',
+
+FORMAT = 'CSV')
+
+--Confirm insert
+SELECT * FROM [WorldCup2022].[Stadium].[Stadiums];
+GO
+
+
