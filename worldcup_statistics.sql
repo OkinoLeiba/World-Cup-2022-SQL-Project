@@ -67,8 +67,10 @@ GO
 -- =============================================
 CREATE STATISTICS ST_Full_Teams
 ON [Team].[Teams]
-   <column_name1, sysname, column1>,
-   <column_name2, sysname, column2>
+(
+	[Key_Id_Teams],
+	[Team_Id],
+    [Confederation_Id]
 ) 
 WITH FULLSCAN;
 GO
@@ -88,8 +90,9 @@ GO
 CREATE STATISTICS ST_NoReCompute_Teams
 ON [Team].[Teams]
 ( 
-   <column_name1, sysname, column1>,
-   <column_name2, sysname, column2>
+	[Key_Id_Teams],
+	[Team_Id],
+	[Confederation_Id]
 ) 
 WITH FULLSCAN, NORECOMPUTE;
 GO
@@ -105,8 +108,9 @@ GO
 CREATE STATISTICS ST_Sample_Teams 
 ON [Team].[Teams]
 ( 
-   <column_name1, sysname, column1>,
-   <column_name2, sysname, column2>
+	[Key_Id_Teams],
+	[Team_Id],
+	[Confederation_Id]
 ) 
 WITH SAMPLE 35 PERCENT;
 GO
@@ -296,6 +300,7 @@ GO
 -- =======================================================================================================================================
 
 
+
 -- =============================================
 -- Create Fullscan Statistics  
 -- =============================================
@@ -304,8 +309,83 @@ GO
 -- Create date: 12/24/2022
 -- Description:	Create statistics to moniter frequently used tables 
 -- =============================================
-CREATE STATISTICS ST_Full_Matchs
-ON [Match].[Matchs]
+CREATE STATISTICS ST_Full_Goals
+ON [Player].[Goals]
+( 
+   [Key_Id_Goal],
+   [Goal_Id],	
+   [Tournament_Id],
+   [Match_Id],
+   [Team_Id],
+   [Player_Id],
+   [Player_Team_Id]
+)
+WITH FULLSCAN;
+GO
+
+-- =============================================
+-- Create Fullscan Norecompute Statistics
+-- =============================================
+-- =============================================
+-- Author:		Okino Leiba
+-- Create date: 12/24/2022
+-- Description:	Create statistics to moniter frequently used tables 
+-- =============================================
+-- Note: Statistics created with NORECOMPUTE are not updated by SQL Server's
+-- automatic statistics update feature (auto-stats). Therefore, they many cause
+-- suboptimal plans.
+
+CREATE STATISTICS ST_NoReCompute_Goals
+ON [Player].[Goals]
+( 
+   [Key_Id_Goal],
+   [Goal_Id],	
+   [Tournament_Id],
+   [Match_Id],
+   [Team_Id],
+   [Player_Id],
+   [Player_Team_Id]
+)
+WITH FULLSCAN, NORECOMPUTE;
+GO
+
+-- =============================================
+--  Create Sampled Statistics 
+-- =============================================
+-- =============================================
+-- Author:		Okino Leiba
+-- Create date: 12/24/2022
+-- Description:	Create statistics to moniter frequently used tables 
+-- =============================================
+CREATE STATISTICS ST_Sample_Goals 
+ON [Player].[Goals]
+( 
+   [Key_Id_Goal],
+   [Goal_Id],	
+   [Tournament_Id],
+   [Match_Id],
+   [Team_Id],
+   [Player_Id],
+   [Player_Team_Id]
+) 
+WITH SAMPLE 35 PERCENT;
+GO
+
+
+-- =======================================================================================================================================
+
+
+
+-- =============================================
+-- Create Fullscan Statistics  
+-- =============================================
+-- =============================================
+-- Author:		Okino Leiba
+-- Create date: 12/24/2022
+-- Description:	Create statistics to moniter frequently used tables 
+-- =============================================
+CREATE STATISTICS ST_Full_Matches
+ON [Match].[Matches]
 ( 
 	[Key_Id_Match],
 	[Tournament_Id],
@@ -329,8 +409,8 @@ GO
 -- automatic statistics update feature (auto-stats). Therefore, they many cause
 -- suboptimal plans.
 
-CREATE STATISTICS ST_NoReCompute_Matchs
-ON [Match].[Matchs]
+CREATE STATISTICS ST_NoReCompute_Matches
+ON [Match].[Matches]
 ( 
 	[Key_Id_Match],
 	[Tournament_Id],
@@ -350,8 +430,8 @@ GO
 -- Create date: 12/24/2022
 -- Description:	Create statistics to moniter frequently used tables 
 -- =============================================
-CREATE STATISTICS ST_Sample_Matcha 
-ON [Match].[Matchs]
+CREATE STATISTICS ST_Sample_Matches 
+ON [Match].[Matches]
 ( 
 	[Key_Id_Match],
 	[Tournament_Id],

@@ -31,6 +31,18 @@
           <AssociatedConnUserName />
           <FullPath>worldcup_addKey.sql</FullPath>
         </FileNode>
+        <FileNode Name="worldcup_analysisTables.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:CAPTAINFANTASTI:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>CAPTAINFANTASTI</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>worldcup_analysisTables.sql</FullPath>
+        </FileNode>
+        <FileNode Name="worldcup_BCP.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:CAPTAINFANTASTI:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>CAPTAINFANTASTI</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>worldcup_BCP.sql</FullPath>
+        </FileNode>
         <FileNode Name="worldcup_CDC.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:CAPTAINFANTASTI:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>CAPTAINFANTASTI</AssociatedConnSrvName>
@@ -43,6 +55,12 @@
           <AssociatedConnUserName />
           <FullPath>worldcup_createFileTable.sql</FullPath>
         </FileNode>
+        <FileNode Name="worldcup_createIndex.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:CAPTAINFANTASTI:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>CAPTAINFANTASTI</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>worldcup_createIndex.sql</FullPath>
+        </FileNode>
         <FileNode Name="worldcup_creatTables.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:CAPTAINFANTASTI:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>CAPTAINFANTASTI</AssociatedConnSrvName>
@@ -54,6 +72,12 @@
           <AssociatedConnSrvName>CAPTAINFANTASTI</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>worldcup_DB.sql</FullPath>
+        </FileNode>
+        <FileNode Name="worldcup_dbConnect.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:CAPTAINFANTASTI:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>CAPTAINFANTASTI</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>worldcup_dbConnect.sql</FullPath>
         </FileNode>
         <FileNode Name="worldcup_selectInto.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:CAPTAINFANTASTI:True</AssociatedConnectionMoniker>
@@ -72,6 +96,12 @@
           <AssociatedConnSrvName>CAPTAINFANTASTI</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>worldcup_statistics.sql</FullPath>
+        </FileNode>
+        <FileNode Name="worldcup_tableUnion.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:CAPTAINFANTASTI:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>CAPTAINFANTASTI</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>worldcup_tableUnion.sql</FullPath>
         </FileNode>
       </Items>
     </LogicalFolder>

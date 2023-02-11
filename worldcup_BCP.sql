@@ -1,4 +1,11 @@
--- =======================================================================================================================================
+-- =============================================
+-- Bulk Insert with BCP
+-- =============================================
+-- =============================================
+-- Author:		Okino Leiba
+-- Create date: 12/28/2022
+-- Description:	Inserting data with command-line bcp
+-- =============================================
 
 
 USE [WorldCup2022];
@@ -43,12 +50,12 @@ GO
 
 --Bulk insert data into table
 BULK INSERT [Tournament].[Tournaments]
-FROM 'C:\Users\Owner\source\repos\worldcup\data-csv\referees.csv'
+FROM 'C:\Users\Owner\source\repos\worldcup\data-csv\tournaments.csv'
 WITH 
 (BATCHSIZE = 1500,
 CODEPAGE = 'OEM',
 --DATAFILETYPE 'CHAR',
-ERRORFILE = 'C:\Users\Owner\Documents\SQL Server Management Studio\worldcup_proj\worldcup_proj\batch_insert_errorfile-referee.txt',
+ERRORFILE = 'C:\Users\Owner\Documents\SQL Server Management Studio\worldcup_proj\worldcup_proj\batch_insert_errorfile-tournaments.txt',
 FIRSTROW = 1,
 KEEPIDENTITY,
 KEEPNULLs,
@@ -62,12 +69,14 @@ ROWTERMINATOR = '0x0a',
 FORMAT = 'CSV')
 
 --Confirm insert
-SELECT * FROM [Tournament].[Tournaments];
+SELECT * FROM [WorldCup2022].[Tournament].[Tournaments];
 GO
 
 
 
---bcp [WorldCup2022].[Tournament].[Tournaments] in "C:/Users/Owner/source/repos/worldcup/data-csv/tournaments.csv" -a 8096 - b 50 -C ACP -e "C:/Users/Owner/Documents/SQL Server Management Studio/worldcup_proj/worldcup_proj/bcp_insert_errorfile-tournament.txt" -F 1 -hint "TABLOCK" -l 5000  -m 10 -q r 0x0a -S CAPTAINFANTASIT\Owner
+--bcp WorldCup2022.Tournament.Tournaments in C:\Users\Owner\source\repos\worldcup\data-csv\tournaments.csv -a 8096 -b 50 -C ACP -e C:\worldcup_proj\worldcup_proj\bcp_insert_errorfile-tournament.txt -F 1 -hint 'TABLOCK' -l 5000  -m 10 -q -r 0x0a -S .\SQLSERVER2015
+
+--bcp WorldCup2022.Tournament.Tournaments in C:\Users\Owner\source\repos\worldcup\data-csv\tournaments.csv -S CAPTAINFANTASTI -T -q -c -t -C ACP -F 1 -r \n -hint 'TABLOCK' -l 5000  -m 10 -r 0x0a 
 
 
 USE [WorldCup2022];
@@ -109,7 +118,8 @@ CREATE TABLE [Tournament].[Tournaments] (
 ) ON [PRIMARY]
 GO
 
-INSERT INTO [Tournament].[Tournaments] VALUES (1,N'WC-1930',N'1930 FIFA World Cup',1930,'1930-07-13 00:00:00','1930-07-30 00:00:00',N'Uruguay',N'Uruguay',1,13,1,0,0,0,0,1,0,1),
+INSERT INTO [Tournament].[Tournaments] VALUES 
+	(1,N'WC-1930',N'1930 FIFA World Cup',1930,'1930-07-13 00:00:00','1930-07-30 00:00:00',N'Uruguay',N'Uruguay',1,13,1,0,0,0,0,1,0,1),
 	(2,N'WC-1934',N'1934 FIFA World Cup',1934,'1934-05-27 00:00:00','1934-06-10 00:00:00',N'Italy',N'Italy',1,16,0,0,0,1,1,1,1,1),
 	(3,N'WC-1938',N'1938 FIFA World Cup',1938,'1938-06-04 00:00:00','1938-06-19 00:00:00',N'France',N'Italy',0,15,0,0,0,1,1,1,1,1),
 	(4,N'WC-1950',N'1950 FIFA World Cup',1950,'1950-06-24 00:00:00','1950-07-16 00:00:00',N'Brazil',N'Uruguay',0,13,1,0,1,0,0,0,0,0),

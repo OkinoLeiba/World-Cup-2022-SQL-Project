@@ -54,10 +54,10 @@ GO
 ALTER TABLE [ImportReport].[ImportReports] ADD PathLocator hierarchyid;  
   
 -- Set the root path of the file directory on the File Server.  
-DECLARE @UNCPathRoot varchar(100) = '\\source\repos\worldcup\data-csv';  
+DECLARE @UNCPathRoot VARCHAR(100) = '\\source\repos\worldcup\data-csv';  
   
 -- Get and Set the root path of the FileTable.  
-DECLARE @FileTableRoot varchar(1000);  
+DECLARE @FileTableRoot VARCHAR(1000);  
 SELECT @FileTableRoot = FileTableRootPath('[ImportReport].[ImportReports]');  
   
 -- Update the FileMetadata table.  

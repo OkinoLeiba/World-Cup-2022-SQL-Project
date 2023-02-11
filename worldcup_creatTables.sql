@@ -5015,39 +5015,39 @@ GO
 --Create table
 CREATE TABLE [Match].[Matches] (
 [Key_Id_Matches] INT NOT NULL,
-[Tournament_Id] varchar(7) NOT NULL,
-[Tournament_Name] varchar(19),
-[Match_Id] varchar(9) NOT NULL,
-[Match_Name] varchar(35),
-[Stage_Name] varchar(18),
-[Group_Name] varchar(14),
+[Tournament_Id] VARCHAR(7) NOT NULL,
+[Tournament_Name] VARCHAR(19),
+[Match_Id] VARCHAR(9) NOT NULL,
+[Match_Name] VARCHAR(35),
+[Stage_Name] VARCHAR(18),
+[Group_Name] VARCHAR(14),
 [Group_Stage] char(1),
 [Knockout_Stage] char(1),
 [Replayed] char(1),
 [Replay] char(1),
 [Match_Date] date,
-[Match_Time] varchar (5),
-[Stadium_Id] varchar(5) NOT NULL,
-[Stadium_Name] varchar(32),
-[City_Name] varchar(16),
-[Country_Name] varchar(13),
-[Home_Team_Id] varchar(4) NOT NULL,
-[Home_Team_Name] varchar(22),
-[Home_Team_Code] varchar(3),
-[Away_Team_Id] varchar(4) NOT NULL,
-[Away_Team_Name] varchar(22),
-[Away_Team_Code] varchar(3),
-[Score] varchar(6),
+[Match_Time] VARCHAR (5),
+[Stadium_Id] VARCHAR(5) NOT NULL,
+[Stadium_Name] VARCHAR(32),
+[City_Name] VARCHAR(16),
+[Country_Name] VARCHAR(13),
+[Home_Team_Id] VARCHAR(4) NOT NULL,
+[Home_Team_Name] VARCHAR(22),
+[Home_Team_Code] VARCHAR(3),
+[Away_Team_Id] VARCHAR(4) NOT NULL,
+[Away_Team_Name] VARCHAR(22),
+[Away_Team_Code] VARCHAR(3),
+[Score] VARCHAR(6),
 [Home_Team_Score] int,
 [Away_Team_Score] int,
 [Home_Team_Score_Margin] int,
 [Away_Team_Score_Margin] int,
 [Extra_Time] char(1),
 [Penalty_Shootout] char(1),
-[Score_Penalties] varchar(5),
+[Score_Penalties] VARCHAR(5),
 [Home_Team_Score_Penalties] char(1),
 [Away_Team_Score_Penalties] char(1),
-[Result] varchar(13),
+[Result] VARCHAR(13),
 [Home_Team_Win] char(1),
 [Away_Team_Win] char(1),
 [Draw] char(1)
@@ -5143,17 +5143,17 @@ GO
 
 --CREATE TABLE [Player].[Players] (
 --[Key_Id_Player] int NOT NULL,
---[Player_Id] varchar(7) NOT NULL,
---[Family_Name] varchar(50),
---[Given_Name] varchar(50),
+--[Player_Id] VARCHAR(7) NOT NULL,
+--[Family_Name] VARCHAR(50),
+--[Given_Name] VARCHAR(50),
 --[Birth_Date] date,
 --[Goal_Keeper] char(1),
 --[Defender] char(1),
 --[Midfielder] char(1),
 --[Forward] char(1),
---[Count_Tournaments] varchar(5),
---[List_Tournaments] varchar(20),
---[Player_Wikipedia_Link] varchar(MAX)
+--[Count_Tournaments] VARCHAR(5),
+--[List_Tournaments] VARCHAR(20),
+--[Player_Wikipedia_Link] VARCHAR(MAX)
 --CONSTRAINT [PK_Key_Id_Player]  PRIMARY KEY NONCLUSTERED
 --(
 --[Key_Id_Player] ASC
@@ -5205,14 +5205,14 @@ GO
 
 CREATE TABLE [Referee].[Referees] (
 [Key_Id_Referees] int NOT NULL,
-[Referee_Id] varchar(5) NOT NULL,
-[Family_Name] varchar(50),
-[Given_Name] varchar(50),
-[Country_Name] varchar(20),
-[Confederation_Id] varchar(4),
-[Confederation_Name] varchar(100),
-[Confederation_Code] varchar(8),
-[Referee_Wikipedia_Linkk] varchar(MAX)
+[Referee_Id] VARCHAR(5) NOT NULL,
+[Family_Name] VARCHAR(50),
+[Given_Name] VARCHAR(50),
+[Country_Name] VARCHAR(20),
+[Confederation_Id] VARCHAR(4),
+[Confederation_Name] VARCHAR(100),
+[Confederation_Code] VARCHAR(8),
+[Referee_Wikipedia_Linkk] VARCHAR(MAX)
 CONSTRAINT [PK_Key_Id_Referees]  PRIMARY KEY NONCLUSTERED
 (
 [Key_Id_Referees] ASC
@@ -5262,13 +5262,13 @@ GO
 
 CREATE TABLE [Stadium].[Stadiums] (
 [Key_Id_Stadium] int NOT NULL,
-[Stadium_Id] varchar(5) NOT NULL,
-[Stadium_Name] varchar(32),
-[City_Name] varchar(16),
-[Country_Name] varchar(13),
-[Stadium_Capacity] varchar(6),
-[Stadium_Wikipedia_Link] varchar(MAX),
-[City_Wikipedia_Link] varchar(MAX)
+[Stadium_Id] VARCHAR(5) NOT NULL,
+[Stadium_Name] VARCHAR(32),
+[City_Name] VARCHAR(16),
+[Country_Name] VARCHAR(13),
+[Stadium_Capacity] VARCHAR(6),
+[Stadium_Wikipedia_Link] VARCHAR(MAX),
+[City_Wikipedia_Link] VARCHAR(MAX)
 CONSTRAINT [PK_Key_Id_Stadiums]  PRIMARY KEY NONCLUSTERED
 (
 [Key_Id_Stadium] ASC

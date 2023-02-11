@@ -28,11 +28,11 @@ GO
 
 --Create table
 CREATE TABLE [Award].[Awards](
-	[Key_Id_Awards] [int] NOT NULL,
-	[Award_Id] [varchar](5) NULL,
-	[Award_Name] [varchar](17) NULL,
-	[Award_Description] [varchar](20) NULL,
-	[Year_Introduced] [int] NULL,
+	[Key_Id_Awards] INT NOT NULL,
+	[Award_Id] VARCHAR(5),
+	[Award_Name] VARCHAR(17),
+	[Award_Description] VARCHAR(20),
+	[Year_Introduced] INT,
     CONSTRAINT [PK_Key_Id_Awards] PRIMARY KEY NONCLUSTERED 
 (
 	[Key_Id_Awards] ASC
