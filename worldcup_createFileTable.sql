@@ -18,22 +18,22 @@ SELECT DB_NAME(database_id) AS database_name, non_transacted_access, non_transac
 GO
 
 
-ALTER DATABASE [WorldCup2022]  
-  WITH FILESTREAM (NON_TRANSACTED_ACCESS = FULL, DIRECTORY_NAME = N'ImportReports')
-
-
 
 IF OBJECT_ID('[ImportReport].[ImportReports]', 'U') IS NOT NULL
   DROP TABLE [ImportReport].[ImportReports]
 GO
 
-CREATE TABLE [ImportReport].[ImportReports] AS FILETABLE
+CREATE TABLE [WorldCup2022].[ImportReport].[ImportReports] AS FILETABLE
   WITH
   (		
 		FileTable_Directory = 'ImportReports',  
         FileTable_Collate_Filename = database_default 
   )
 GO
+
+
+ALTER DATABASE [WorldCup2022]  
+  WITH FILESTREAM (NON_TRANSACTED_ACCESS = FULL, DIRECTORY_NAME = N'ImportReports')
 
 
 -- View all objects for all filetables, unsorted  

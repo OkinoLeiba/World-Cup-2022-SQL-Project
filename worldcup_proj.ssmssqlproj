@@ -79,6 +79,12 @@
           <AssociatedConnUserName />
           <FullPath>worldcup_dbConnect.sql</FullPath>
         </FileNode>
+        <FileNode Name="worldcup_roleReadOnly.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:CAPTAINFANTASTI:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>CAPTAINFANTASTI</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>worldcup_roleReadOnly.sql</FullPath>
+        </FileNode>
         <FileNode Name="worldcup_selectInto.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:CAPTAINFANTASTI:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>CAPTAINFANTASTI</AssociatedConnSrvName>
